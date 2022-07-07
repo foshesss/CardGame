@@ -3,8 +3,10 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"math/rand"
 	"os"
 	"strings"
+	"time"
 )
 
 // Create and hold all methods of type 'deck', a slice of strings.
@@ -69,4 +71,14 @@ func (d deck) deal(numCards int) (deck, deck) {
 func (d deck) saveToFile(fileName string) error {
 	fileName = applyFilePath(fileName)
 	return ioutil.WriteFile(fileName, []byte(d.toString()), 0666)
+}
+
+func (d deck) shuffle() {
+	source := rand.NewSource(time.Now().UnixNano())
+	rng := rand.New(source)
+
+	for i := range d {
+		newPos := rng.Intn(len(d) - 1)
+		d[i], d[newPos] = d[newPos], d[i] // omg just like Lua
+	}
 }

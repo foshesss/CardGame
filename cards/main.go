@@ -9,7 +9,10 @@ Derp
 */
 
 func main() {
-	cards := newDeckFromFile("Derp-Test")
+	cards := newDeck()
+
+	cards.shuffle()
+	cards.print()
 
 	cards.saveToFile("Derp-Test")
 }
